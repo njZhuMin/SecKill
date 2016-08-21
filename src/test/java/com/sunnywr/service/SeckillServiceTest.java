@@ -5,7 +5,6 @@ import com.sunnywr.dto.SeckillExecution;
 import com.sunnywr.entity.Seckill;
 import com.sunnywr.exception.RepeatKillException;
 import com.sunnywr.exception.SeckillCloseException;
-import com.sunnywr.exception.SeckillException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -15,8 +14,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({
@@ -70,7 +67,7 @@ public class SeckillServiceTest {
      */
     @Test
     public void testSeckillLogic() throws Exception {
-        long id = 1000L;
+        long id = 1001L;
         Exposer exposer = seckillService.exportSeckillUrl(id);
         if(exposer.isExposed()) {
             logger.info("exposer = {}" ,exposer);
@@ -87,6 +84,18 @@ public class SeckillServiceTest {
         } else {
             // 秒杀未开始
             logger.warn("exposer = {}" ,exposer);
+        }
+    }
+
+    @Test
+    public void testExcuteSeckillProcedure() {
+        long seckillId = 1003;
+        long phone = 12345612345L;
+        Exposer exposer = seckillService.exportSeckillUrl(seckillId);
+        if(exposer.isExposed()) {
+            String md5 = exposer.getMd5();
+            SeckillExecution execution = seckillService.executeSeckillProcedure(seckillId, phone, md5);
+            logger.info(execution.getStateInfo());
         }
     }
 }

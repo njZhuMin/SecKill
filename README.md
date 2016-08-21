@@ -13,7 +13,9 @@ http://sunnywr.com/blog/categories/project/SecKill/
 - Spring：core，beans，context，jdbc，tx
 - Spring Web：web，webmvc
 - 测试组件：JUnit，spring-test
-- Google Guava
+- 缓存：jedis
+- 序列化：protoStuff
+- 工具类：commons-collections, Google Guava
 
 ## 具体实现
 系统具体实现哪些功能：<br/>
